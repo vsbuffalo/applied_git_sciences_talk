@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<meta charset="utf-8"/>
+
+<!--[if lt IE 9]>
+    <script src="html-slideshow/lib/html5shim.js"></script>
+<![endif]-->  
+  
+<link rel="stylesheet" href="html-slideshow/lib/styles.css" />
+<link rel="stylesheet" href="html-slideshow/css/styles.css" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
+
+<style type="text/css" media="screen">
+@font-face {
+    font-family: 'Open Sans';
+    font-weight: normal;
+    font-style: normal;
+} 
+
+body {
+}
+
+section h1, section h2 {
+    text-align: center;
+}
+
+pre {
+   margin: 16px;
+   padding: 0;
+   white-space: pre;
+   line-height: 102%;
+}
+
+pre code {
+    font-size: 16px;
+    display: block;
+    padding: 14px;
+    margin: 0;
+}
+
+.title-card {
+    text-align: center;
+    margin-top: 18em;
+}
+
+#deck h1 {
+    font-family: 'Open Sans', Arial;
+    font-size: 60px;
+    font-weight: 900;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
+}
+
+#deck h2 { 
+    font-family: 'Open Sans', Arial;
+    font-size: 30px;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
+}
+
+#deck h3 {
+    font-size: 20px;
+}
+
+#deck p, #deck li {
+    width: 76%;
+    margin-left: 10%;
+    font-family: 'Open Sans', Arial;
+    font-size: 24px;
+    padding: 0.4em;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
+}
+
+#deck li {
+    margin-left: 14%;
+}
+
+#deck pre {
+    width: 70%;
+    margin-left: 14%;
+}
+
+.main-point { color: steelblue; text-align: center; }
+.main-point bold { font-size: 1.4em; }
+</style>
+
+
+<title>Applied Git for the Sciences</title>
+
+<header>
+  <h1>Applied Git for the Sciences</h1>
+  <nav>
+    <ul>
+      <li><button id="prev-btn" title="Previous slide">Previous Slide</button></li>
+      <li><span id="slide-number"></span>/<span id="slide-total"></span></li>
+      <li><button id="next-btn" title="Next Slide">Next Slide</button></li>
+    </ul>
+  </nav>
+</header>
+
+<div id="deck">
+  <section class="title-card">
+    <hgroup>
+      <h1>Applied Git for the Sciences</h1>
+      <h2>Vince Buffalo</h2>
+      <h3> <a href="mailto:vsbuffaloAAAAA@gmail.com" title="my email address; remove the poly-A tail">vsbuffaloAAAAA@gmail.com</a> (sans poly-A tail)
+      </h3>
+    </hgroup>
+      </p>
+  </section>
+
+  
+  <section>
+    <hgroup>
+      <h1>Why Use Git?</h1>
+      <h2>Version directories kinda suck.</h2>
+    </hgroup>
+    <pre><code language="bash-results">[vinceb]% ll
+drwxr-xr-x   2 vinceb  staff    68B Apr  8 00:10 analysis-project-2013-04-16
+drwxr-xr-x   2 vinceb  staff    68B Apr  8 00:10 analysis-project-2013-04-15
+drwxr-xr-x   2 vinceb  staff    68B Apr  8 00:10 analysis-project-2013-04-14
+drwxr-xr-x   2 vinceb  staff    68B Apr  8 00:10 analysis-project-2013-04-08</code></pre>
+      <ul>
+	<li>
+	  List most recent? Only will work if you use ISO-8601 dates (i.e. 2013-04-08)
+	</li>
+	<li>
+	  What if you have a new idea. Do you create analysis-project-2013-04-08-new-idea?
+	</li>
+	<li>
+	  How are you backing these up?
+	</li>
+      </ul>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>Why Use Git?</h1>
+      <h2>Code collaboration is hard.</h2>
+    </hgroup>
+      <p>Suppose you use your date directory listings...</p>
+      
+      <ul>
+	<li>Which do you give a collaborator?</li>
+	<li>You want to keep working on your versions while your
+	collaborator works on theirs. How do you combine them at the
+	end?</li>
+	<li>Emailing/<code>rsync</code>ing/<code>scp</code>ing directories is a pain.</li>
+	<li>Are you sending your (embarrassing) <code>.Rhistory</code>
+	files too?</li>
+      </ul>
+  </section>
+
+
+  <section>
+    <hgroup>
+      <h1>Why Use Git?</h1>
+      <h2>Git is the right tool for the job.</h2>
+    </hgroup>
+
+    <p>
+      <strong>Git solves these problems</strong>. It can also be
+      applied to documents (i.e. HTML, LaTeX), configuration files
+      (i.e. <code>~/.Rprofile</code>, <code>~/.zshrc</code>), text
+      data, and more. Even Homebrew, a Mac package manager, uses Git!
+    </p>
+      <p class="main-point">
+	<bold>Don't waste time fighting improper tools. Invest in
+	developing skills. Chances are it will save you time
+	overall.*</bold>
+      </p>
+      <p style="color: steelblue; font-size: 0.4em; text-align: center;">
+	*maybe, if you're young ;-)
+      </p>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>What is Git?</h1>
+    </hgroup>
+    <p>
+      Git is <strong>distributed version control</strong> software.
+    </p>
+    <ul>
+      <li><strong>Distributed</strong>: Each user's "working copy" is
+      actually a repository. You can commit to your own repository
+      without touching a "central" repository. <span style="color:
+      steelblue;">In other words, you can manage code, commit, and
+      branch as you please, without other people seeing how you
+      work. Then you can share certain branches and commits with
+      others.</span></li>
+      <li><strong>Version Control</strong>: Manages revisions to
+      code. <span style="color: steelblue;">This allows you to go back
+      in time, compare versions, merge versions, and pull in others'
+      versions.</span></li>
+    </ul>
+  </section>
+
+
+  <section>
+    <hgroup>
+      <h1>Git Basics</h1>
+      <h2>Initialize a Repository</h2>
+    </hgroup>
+    <p>Git works via a set of subcommands like <code>init</code>,
+    <code>add</code>, <code>commit</code>, etc. Let's initialize
+    a repository:
+    <pre><code>$ git init
+</code>
+    </pre>
+    </p>
+  </section>
+      
+
+</div>
+<!-- /deck -->
+<script src="html-slideshow/lib/jquery-1.5.2.min.js"></script>
+<script src="html-slideshow/lib/jquery.jswipe-0.1.2.js"></script>  
+<script src="html-slideshow/lib/htmlSlides.js"></script>
+<script>
+  //Do our business when the DOM is ready for us
+  $(function() {
+  
+  //You can trigger Javascript based on the slide number like this:
+  $('html').bind('newSlide', function(e, id) { 
+  switch(id) {
+  case 2:
+  console.log('This is the second slide.');;
+  break;
+  case 3:
+  console.log('Hello, third slide.');
+  break;
+  }
+  });
+  
+  //One little option: hideToolbar (boolean; default = false)
+  htmlSlides.init({ hideToolbar: true });
+  
+  });
+</script>
+

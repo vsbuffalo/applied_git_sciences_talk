@@ -1,0 +1,3 @@
+[submodule "slides/html-slideshow"]
+	path = slides/html-slideshow
+	url = git://github.com/robflaherty/html-slideshow.git
