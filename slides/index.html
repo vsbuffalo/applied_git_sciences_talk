@@ -192,6 +192,26 @@ drwxr-xr-x   2 vinceb  staff    68B Apr  8 00:10 analysis-project-2013-04-08</co
     </ul>
   </section>
 
+  <section>
+    <hgroup>
+      <h1>Git Basics</h1>
+      <h2>Tell Git who you are are, and what to ignore.</h2>
+    </hgroup>
+    <p>You'll be collaborating with Git, so it's important to tell Git
+    your name and email address:
+    <pre><code>$ git config --global user.name "Vince Buffalo"
+git config --global user.email "vsbuffaloAAAAA@gmail.com"
+</code></pre>
+    </p>
+    <p>Don't commit junk files like <code>.DS_Store</code>,
+    <code>#editorfiles.txt#</code>, etc into Git. Add these files to
+    either a project specific (via <code>.gitignore</code>, or global
+    Git configuration. I highly recommend working with GitHub's <a
+    href="https://github.com/github/gitignore" title="Collection of
+    useful .gitignore templates">collection of useful .gitignore
+    templates</a></p>
+  </section>
+
 
   <section>
     <hgroup>
