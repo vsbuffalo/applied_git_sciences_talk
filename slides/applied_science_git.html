@@ -61,11 +61,10 @@ pre code {
 
 #deck p, #deck li {
     width: 76%;
-    margin-left: 10%;
+    margin: 0 0 0 10%;
     font-family: 'Open Sans', Arial;
     font-size: 24px;
     padding: 0.4em;
-    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
 }
 
 #deck li {
@@ -183,7 +182,7 @@ drwxr-xr-x   2 vinceb  staff    68B Apr  8 00:10 analysis-project-2013-04-08</co
       actually a repository. You can commit to your own repository
       without touching a "central" repository. <span style="color:
       steelblue;">In other words, you can manage code, commit, and
-      branch as you please, without other people seeing how you
+      branch as you please, without collaborator seeing how you
       work. Then you can share certain branches and commits with
       others.</span></li>
       <li><strong>Version Control</strong>: Manages revisions to
@@ -202,12 +201,367 @@ drwxr-xr-x   2 vinceb  staff    68B Apr  8 00:10 analysis-project-2013-04-08</co
     <p>Git works via a set of subcommands like <code>init</code>,
     <code>add</code>, <code>commit</code>, etc. Let's initialize
     a repository:
-    <pre><code>$ git init
-</code>
-    </pre>
+    <pre><code>$ mkdir your-project
+$ cd your-project
+$ git init
+Initialized empty Git repository in /Users/vinceb/Projects/git_talk/your-project/.git/</code></pre></p>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>Git Basics</h1>
+      <h2>Use <code>git status</code> (a lot)</h2>
+    </hgroup>
+         <p>
+       Let's create a file, and then use <code>git status</code> to look at it.
+      <pre><code>$ echo "sciencey stuff" > a-file.txt
+$ git status
+# On branch master
+#
+# Initial commit
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#a-file.txt
+nothing added to commit but untracked files present (use "git add" to track)</code></pre>
+    </p>
+
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>Git Basics</h1>
+      <h2>Tracking new files, the index, and commits</h2>
+    </hgroup>
+    <p>
+      The command <code>git add</code> has two functions: 
+      <ul>
+	<li>Tells Git to <em>track</em> new files.</li>
+	<li>Tells Git to <em>stage</em> modified files to be included
+	in the next commit.</li>
+      </ul>
+    </p>
+    <p style="text-align: center;">
+      <svg width="600" height="200" xmlns="http://www.w3.org/2000/svg">
+	<!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+	<g>
+	  <title>Layer 1</title>
+	  <rect stroke="#ffd4aa" id="svg_1" height="41.80571" width="230" y="22" x="175" stroke-width="0" fill="#fc8d59"/>
+	  <text xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="24" id="svg_2" y="51" x="291" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#ffd4aa" fill="#4c4c4c">working directory</text>
+	  <rect id="svg_5" stroke="#ffd4aa" height="41.80571" width="230" y="144.09715" x="176" stroke-width="0" fill="#91bfdb"/>
+	  <path id="svg_8" stroke="#ffd4aa" transform="rotate(90 424 144)" d="m394,159.5l0,-19.4375l0,0c0,-15.22224 11.75266,-27.5625 26.25,-27.5625l0,0l0,0c6.96167,0 13.63864,2.9041 18.5614,8.07257c4.92282,5.16939 7.6886,12.18018 7.6886,19.48993l0,3.9375l7.5,0l-15,15.75l-15,-15.75l7.5,0l0,-3.9375c0,-6.52388 -5.03723,-11.8125 -11.25,-11.8125l0,0l0,0c-6.21365,0 -11.25,5.28862 -11.25,11.8125l-0.5,19.4375l-14.5,0z" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" fill="#4c4c4c"/>
+	  <rect id="svg_3" stroke="#ffd4aa" height="41.80571" width="230" y="87.09715" x="176" stroke-width="0" fill="#ffffbf"/>
+	  <text id="svg_4" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="24" y="117.09715" x="292" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#ffd4aa" fill="#4c4c4c">index</text>
+	  <text id="svg_6" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="24" y="172.09715" x="292" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#ffd4aa" fill="#4c4c4c">repository</text>
+	  <text id="svg_11" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="24" y="147.22656" x="507" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#ffd4aa" fill="#4c4c4c">commit</text>
+	  <path id="svg_9" stroke="#ffd4aa" transform="rotate(90 423 78.875)" d="m393,94.375l0,-19.4375l0,0c0,-15.22224 11.75266,-27.5625 26.25,-27.5625l0,0l0,0c6.96167,0 13.63864,2.9041 18.5614,8.07257c4.92282,5.16939 7.6886,12.18018 7.6886,19.48993l0,3.9375l7.5,0l-15,15.75l-15,-15.75l7.5,0l0,-3.9375c0,-6.52388 -5.03723,-11.8125 -11.25,-11.8125l0,0l0,0c-6.21365,0 -11.25,5.28862 -11.25,11.8125l-0.5,19.4375l-14.5,0z" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" fill="#4c4c4c"/>
+	  <text id="svg_12" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="24" y="78.23438" x="501.5" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#ffd4aa" fill="#4c4c4c">add</text>
+	</g>
+      </svg>
     </p>
   </section>
-      
+
+  <section>
+    <hgroup>
+      <h1>Git Basics</h1>
+      <h2>Adding Files</h2>
+    </hgroup>
+    <p>
+<pre><code>$ git status
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   (use "git rm --cached <file>..." to unstage)
+#
+#new file:   a-file.txt
+#</code></pre>      
+    </p>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>Git Basics</h1>
+      <h2>Commiting</h2>
+    </hgroup>
+    <p>Get in the habit of always using <code>git status</code> before
+    commiting — it will prevent many headaches.</p>
+<p><pre><code>$ git commit -m "initial import"
+[master (root-commit) 7c28217] initial import
+ 1 file changed, 1 insertion(+)
+ create mode 100644 a-file.txt</code></pre></p>
+   <p><code>-m</code> specifies, the <em>commit message</em> — get in
+   the habit of making these useful (don't write "changes", or ".", etc)</p>
+   <p>If you want every tracked file to be staged for the next commit,
+   you can use <code>-am "commit message"</code>.</p>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>Git Basics</h1>
+      <h2>What are commits?</h2>
+    </hgroup>
+      <p>
+	Let's add some more commits (ignoring output):
+	<pre><code>$ echo "more sciencey stuff" >> a-file.txt
+$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#modified:   a-file.txt
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git add a-file.txt
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#modified:   a-file.txt
+#</code></pre>
+      </p>
+  </section>
+  
+  <section>
+    <hgroup>
+      <h1>Git Basics</h1>
+      <h2><code>git log</code></h2>
+    </hgroup>
+    <p>
+	We can use <code>git log</code> to get an idea:
+	<pre><code>* commit 5e4abf148e9d6f1fc78edefc7b1a4d4a9c1b1d32
+| Author: Vince Buffalo <vsbuffalo@gmail.com>
+| Date:   Mon Apr 8 10:30:00 2013 -0700
+|
+|     added more sciencey stuff
+|
+* commit 7c28217614e9ba9f6e012c1638e97271eb912b17
+  Author: Vince Buffalo <vsbuffalo@gmail.com>
+  Date:   Mon Apr 8 10:21:19 2013 -0700
+
+      initial import </code></pre>
+    </p>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>Git Basics</h1>
+      <h2><code>git log</code></h2>
+    </hgroup>
+    <p>Some useful options are:
+    <ul>
+      <li><code>git log --graph</code>: shows a graph of commits</li>
+      <li><code>git log -p</code>: shows a diff</li>
+      <li><code>git log --stat</code>: indicates modified files and number added/removed lines</li>
+      <li><code>git log --abbrev-commit</code>: don't show a full SHA-1 commit ID</li>
+    </ul>
+    </p>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>Git Basics</h1>
+      <h2>So again, what are commits?</h2>
+    </hgroup>
+    <p>
+      Commits save the state of your repository at a certain point in
+      time — they are snapshots. Commits always have parent commits
+      (except one, what is it?).
+    </p>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>Git: Peaking into the Rabbit Hole</h1>
+      <h2>Heads and HEAD</h2>
+    </hgroup>
+    <p>
+      Now, let's talk a bit more about the Git abstraction. Git
+      commits are objects, that also have parents. The very last
+      commit (the one without a child) is special, in the sense that
+      it's where a new commit would go. We want a <em>pointer</em> to
+      this special commit. <bold>Heads</bold> are pointers to commit
+      objects, and <code>HEAD</code> is an alias to the current head.
+    </p>
+    <p>
+      Right before a commit, <code>HEAD</code> was pointing to the
+      last commit. After a commit, <code>HEAD</code> is pointing to
+      the latest commit.
+    </p>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>Git Out of Trouble</h1>
+      <h2>Unmodifying a File</h2>
+    </hgroup>
+    <p>
+      Use <code>git status</code> to see that a file is modified. What
+      you wish to do is checkout the version of the file from either a
+      commit, or the index. For this, we use <code>git checkout --
+      file.txt</code>, which checks it out from the index. <code>git
+      checkout</code> has a lot of functions; the <code>--</code> just
+      prevents confusion between branch names and file names.
+    </p>
+    <p>
+      Note something about this: instead of <code>--</code>, we can
+      use <em>any</em> reference to a past commit, to grab that
+      commit's version of the file!
+    </p>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>Deeper into the Rabbit Hole</h1>
+      <h2>Referring to Ancestor Commits (simple)</h2>
+    </hgroup>
+    <p>
+      Git has a neat little syntax syntax for referring to past
+      commits. One way is to use the SHA-1 ID, but copying and pasting
+      is a pain.
+    </p>
+    <p>
+      Instead, you can use <code>HEAD^</code>, which means the parent
+      of <code>HEAD</code>. Or, <code>HEAD^^^</code>. Or
+      <code>HEAD~3</code>. So, you can grab any file in a past commit
+      with <code>git chechout HEAD~4 file.txt</code> (with your
+      particular file and commit).
+    </p>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>More Git'ing Out of Trouble</h1>
+      <h2>Unstaging a File</h2>
+      <p>
+	If you've used <code>git add</code> to a file you didn't mean
+	to you, you can remove it from the index using <code>git rm
+	--cached file.txt</code>. 
+      </p>
+    </hgroup>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>More Git'ing Out of Trouble</h1>
+      <h2>Stuff I won't teach you (but you should learn)</h2>
+    </hgroup>
+    <p>
+      <ul>
+	<li><code>git commit --amend</code>: ammend a commit.</li>
+	<li><code>git stash</code>: stash your working modifications,
+	and apply them somewhere else later.</li>
+      </ul>
+    </p>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>Branches!</h1>
+      <h2>Why Use Branches?</h2>
+    </hgroup>
+    <p>For most other VCSs, branching was a pain in the ass. </p>
+    <p>Git makes branches entirely local, fast, and
+    easy. Consequently, get used to thinking about branching
+    differently.</p>
+    <p>You will have to develop your own workflow, but I typically
+    think of <code>master</code> as the clean, pretty, main stream of
+    ideas, and other branches as:
+    <ul>
+      <li>experiments</li>
+      <li>complex bug fixes (that may need lots of changing of files</li>
+      <li>really large refactors that will break everything</li>
+    </ul>
+    </p>
+  </section>
+
+
+  <section>
+    <hgroup>
+      <h1>Branches!</h1>
+      <h2>Creating a branch</h2>
+    </hgroup>
+    <p>Creating a branch is simple:</p>
+    <p><code>git checkout -b your-branch-name</code></p>
+    <p>Them work and make commits on this branch. Use <code>git log
+    --graph</code> to see your progress.</p>
+    <p>If you make a branch by accident, you can remove it with
+    <code>git branch -d your-branch-name</code></p>
+    <p>Branches are lightweight because they are just references to
+commits (not whole other directories, etc).</p>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>Branches!</h1>
+      <h2>Merging</h2>
+    </hgroup>
+    <p>The power of branching is in <bold>merging</bold> different
+    branches together. Stuff can get tricky here, <em>especially if
+    you're switching back and forth and making commits to two separate
+    branches on the same files</em>. Git isn't smart enough to know
+    how to merge source, so if you get a <bold>merge conflict</bold>,
+    you have to sort it out yourself.</p>
+    <p>Merge files by: 
+    <ul>
+      <li>First, checkout out the branch you want to pull the other branch into.</li>
+      <li>Second, using <code>git merge other-branch</code> to merge
+      in other-branch into your current branch.</li>
+    </ul>
+    </p>
+  </section>
+  
+  <section>
+    <hgroup>
+      <h1>Branches!</h1>
+      <h2>Merge Conflicts</h2>
+    </hgroup>
+    <p>Let's make one.</p>
+    <p>Your tools:
+    <ul>
+      <li><code>git status</code>: check the status of your merge conflict</li>
+      <li><code>git add</code>: tell Git that you've resolved a
+      conflict in a file</li>
+      <li><code>git commit</code>: make the merge commit</li>
+      <li><code>git log --graph</code>: take a look at your new merge graph</li>
+    </ul>
+    </p>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>Working with Remotes</h1>
+      <h2>Remote Repositories</h2>
+    </hgroup>
+    <p>Remote repositories are how you share your work. You must
+    specify a name for new remotes when adding them; by convention
+    "origin" is the name of main remote.</p>
+    <p><code>git remote add origin
+    ssh://domain.com/path/to/repo.git</code> tells your local Git
+    repository about a particular remote repository.</p>
+    <p>You can pull in changes with <code>git pull origin
+master</code> and push changes with <code>git push origin master</code>.</p>
+  </section>
+
+  <section>
+    <hgroup>
+      <h1>Into the Rabbit Hole</h1>
+      <h2>More stuff I won't teach you (but you should learn)</h2>
+    </hgroup>
+    <p>
+      <ul>
+	<li><code>git rebase</code></li>
+	<li><code>git reset</code></li>
+	<li><code>git submodule</code></li>
+	<li><code>git tag</code></li>
+	<li>git internals</li>
+      </ul>
+    </p>
+  </section>
 
 </div>
 <!-- /deck -->
